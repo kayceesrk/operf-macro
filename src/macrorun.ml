@@ -243,7 +243,7 @@ set style data histograms
 %s
 set datafile separator ','
 set boxwidth 0.9 absolute
-set key inside right top vertical Right noreverse noenhanced autotitles nobox
+set key outside right top vertical Right noreverse noenhanced autotitles nobox
 set datafile missing ''
 set ylabel "normalized %s (less is better)"
 set xtics border in scale 0,0 mirror rotate by -45  offset character 0, 0, 0 autojustify
