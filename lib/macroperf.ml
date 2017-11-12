@@ -274,6 +274,12 @@ module Topic = struct
       | Free_blocks
       | Largest_free
       | Fragments
+      | Immutable_loads
+      | Pointer_loads
+      | Float_loads
+      | Other_prim_loads
+      | Init_stores
+      | Mutable_stores
     [@@deriving sexp]
 
     let of_string_exn : string -> t = function
@@ -292,6 +298,12 @@ module Topic = struct
       | "largest_free"      -> Largest_free
       | "fragments"         -> Fragments
       | "compactions"       -> Compactions
+      | "immutable_loads"   -> Immutable_loads
+      | "pointer_loads"     -> Pointer_loads
+      | "float_loads"       -> Float_loads
+      | "other_prim_loads"  -> Other_prim_loads
+      | "init_stores"       -> Init_stores
+      | "mutable_stores"    -> Mutable_stores
       | _ -> invalid_arg "gc_of_string_exn"
 
     let of_string s = try Some (of_string_exn s) with _ -> None
@@ -312,6 +324,12 @@ module Topic = struct
       | Largest_free -> "largest_free"
       | Fragments -> "fragments"
       | Compactions -> "compactions"
+      | Immutable_loads -> "immutable_loads"
+      | Pointer_loads -> "pointer_loads"
+      | Float_loads -> "float_loads"
+      | Other_prim_loads -> "other_prim_loads"
+      | Init_stores -> "init_stores"
+      | Mutable_stores -> "mutable_stores"
 
     let compare = compare
   end
@@ -563,7 +581,7 @@ module Benchmark = struct
   } [@@deriving sexp]
 
   let make ~name ?(descr="") ~cmd ?(cmd_check=[]) ?(file_check=[])
-      ?binary ?env ~speed ?(timeout=600) ?(weight=1.) ?(discard=[]) ~topics 
+      ?binary ?env ~speed ?(timeout=600) ?(weight=1.) ?(discard=[]) ~topics
       ?(return_value=0) () =
     { name; descr; cmd; cmd_check; file_check; binary; env; speed; timeout;
       weight; discard; topics = TSet.of_list topics; return_value; }
@@ -1226,8 +1244,8 @@ module Runner = struct
 
   let run_command ?(discard_stdout=false) prog args =
     let cmd = Array.fold_left (fun acc arg -> acc ^ arg ^ " ") "" args in
-    let fd_stdout = 
-      if discard_stdout then snd (make_tmp_file ".out") 
+    let fd_stdout =
+      if discard_stdout then snd (make_tmp_file ".out")
       else Unix.stdout in
     let pid = Unix.create_process prog args Unix.stdin fd_stdout Unix.stderr in
     let rpid, status = Unix.waitpid [] pid in
