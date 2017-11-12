@@ -96,6 +96,12 @@ module Topic : sig
       | Free_blocks
       | Largest_free
       | Fragments
+      | Immutable_loads
+      | Pointer_loads
+      | Float_loads
+      | Other_prim_loads
+      | Init_stores
+      | Mutable_stores
 
     val of_string_exn : string -> t
     val of_string : string -> t option
