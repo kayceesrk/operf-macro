@@ -332,7 +332,7 @@ module Topic = struct
       | Other_prim_loads -> "other_prim_loads"
       | Init_stores -> "init_stores"
       | Mutable_stores -> "mutable_stores"
-      | Mean_space_overheads -> "mean_space_overhead"
+      | Mean_space_overhead -> "mean_space_overhead"
 
     let compare = compare
   end
