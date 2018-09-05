@@ -102,6 +102,7 @@ module Topic : sig
       | Other_prim_loads
       | Init_stores
       | Mutable_stores
+      | Mean_space_overhead
 
     val of_string_exn : string -> t
     val of_string : string -> t option
