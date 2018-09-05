@@ -280,30 +280,32 @@ module Topic = struct
       | Other_prim_loads
       | Init_stores
       | Mutable_stores
+      | Mean_space_overhead
     [@@deriving sexp]
 
     let of_string_exn : string -> t = function
-      | "minor_words"       -> Minor_words
-      | "promoted_words"    -> Promoted_words
-      | "major_words"       -> Major_words
-      | "minor_collections" -> Minor_collections
-      | "major_collections" -> Major_collections
-      | "heap_words"        -> Heap_words
-      | "heap_chunks"       -> Heap_chunks
-      | "top_heap_words"    -> Top_heap_words
-      | "live_words"        -> Live_words
-      | "live_blocks"       -> Live_blocks
-      | "free_words"        -> Free_words
-      | "free_blocks"       -> Free_blocks
-      | "largest_free"      -> Largest_free
-      | "fragments"         -> Fragments
-      | "compactions"       -> Compactions
-      | "immutable_loads"   -> Immutable_loads
-      | "pointer_loads"     -> Pointer_loads
-      | "float_loads"       -> Float_loads
-      | "other_prim_loads"  -> Other_prim_loads
-      | "init_stores"       -> Init_stores
-      | "mutable_stores"    -> Mutable_stores
+      | "minor_words"         -> Minor_words
+      | "promoted_words"      -> Promoted_words
+      | "major_words"         -> Major_words
+      | "minor_collections"   -> Minor_collections
+      | "major_collections"   -> Major_collections
+      | "heap_words"          -> Heap_words
+      | "heap_chunks"         -> Heap_chunks
+      | "top_heap_words"      -> Top_heap_words
+      | "live_words"          -> Live_words
+      | "live_blocks"         -> Live_blocks
+      | "free_words"          -> Free_words
+      | "free_blocks"         -> Free_blocks
+      | "largest_free"        -> Largest_free
+      | "fragments"           -> Fragments
+      | "compactions"         -> Compactions
+      | "immutable_loads"     -> Immutable_loads
+      | "pointer_loads"       -> Pointer_loads
+      | "float_loads"         -> Float_loads
+      | "other_prim_loads"    -> Other_prim_loads
+      | "init_stores"         -> Init_stores
+      | "mutable_stores"      -> Mutable_stores
+      | "mean_space_overhead" -> Mean_space_overhead
       | _ -> invalid_arg "gc_of_string_exn"
 
     let of_string s = try Some (of_string_exn s) with _ -> None
@@ -330,6 +332,7 @@ module Topic = struct
       | Other_prim_loads -> "other_prim_loads"
       | Init_stores -> "init_stores"
       | Mutable_stores -> "mutable_stores"
+      | Mean_space_overheads -> "mean_space_overhead"
 
     let compare = compare
   end
