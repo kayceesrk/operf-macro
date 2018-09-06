@@ -1121,8 +1121,8 @@ module Process = struct
            try
              let i = String.index s ':' in
              let gc = Topic.Gc.of_string_exn @@ String.sub s 0 i in
-             let v = Int64.of_string @@ String.sub s (i+2) (String.length s - i - 2) in
-             Topic.(Topic (gc, Gc), Measure.of_int64 v) :: acc
+             let v = String.sub s (i+2) (String.length s - i - 2) in
+             Topic.(Topic (gc, Gc), Measure.of_string v) :: acc
            with _ -> acc)
         [] lines
     in
