@@ -1126,22 +1126,7 @@ module Process = struct
            with _ -> acc)
         [] lines
     in
-    let data = (* Make promoted_words a ratio of minor_words *)
-      try
-        let minor =
-          Measure.to_int64 (List.assoc Topic.(Topic (Gc.Minor_words, Gc)) data)
-        in
-        List.map (fun (topic, measure) -> topic, match topic with
-            | Topic.Topic (gc, Topic.Gc) when gc = Topic.Gc.Promoted_words ->
-                let prom = Measure.to_int64 measure in
-                if prom = Int64.zero then Measure.of_float 0. else
-                  Measure.of_float (Int64.to_float prom /. Int64.to_float minor)
-            | _ -> measure)
-          data
-      with Not_found -> data
-    in
     data
-
 end
 
 module Perf_wrapper = struct
